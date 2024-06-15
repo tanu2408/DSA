@@ -1,0 +1,40 @@
+time complexity:-O(nlogn)
+space complexity :- O(n)
+
+class Solution {
+public:
+    int findMaximizedCapital(int k, int paissa, vector<int>& profits, vector<int>& capital) {
+         int n = profits.size();
+
+       // make a pair of of capital,profit using vector
+
+        vector<pair<int, int>> vec(n);
+        
+        for (int i = 0; i < n; i++) {
+            vec[i] = {capital[i], profits[i]};
+        }
+
+   // sort based on capital
+
+        sort(vec.begin(), vec.end());
+
+        int i = 0;
+
+// store the profit based in priority queue 
+
+        priority_queue<int> pq;
+
+        while (k--) {
+            while (i < n && vec[i].first <= paissa) {
+                pq.push(vec[i].second);
+                i++;
+            }
+            if (pq.empty())
+                break;
+            paissa += pq.top();
+            pq.pop();
+        }
+        return paissa;
+        
+    }
+};
